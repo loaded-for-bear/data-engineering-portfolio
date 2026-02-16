@@ -42,7 +42,7 @@ def analyze_logs(csv_text: str) -> dict:
 
 
 if __name__ == "__main__":
-    csv_path = Path(__file__).parent / "sample.csv"
+    csv_path = Path(__file__).parent / "data" / "sample.csv"
     with open(csv_path, "r") as f:
         csv_text = f.read()
     print(analyze_logs(csv_text))
