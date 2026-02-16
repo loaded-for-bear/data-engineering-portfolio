@@ -99,7 +99,7 @@ def load(
 
 
 def main():
-    lines = extract(BASE_PATH / "app_server.log")
+    lines = extract(BASE_PATH / "data" / "app_server.log")
     server_metrics, endpoint_report, anomaly_minutes = transform(lines)
     load(server_metrics, endpoint_report, anomaly_minutes)
 

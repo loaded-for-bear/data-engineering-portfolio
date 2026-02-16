@@ -47,5 +47,5 @@ def etl_sales(input_file) -> None:
 
 
 if __name__ == "__main__":
-    csv_path = Path(__file__).parent / "sales_raw.csv"
+    csv_path = Path(__file__).parent / "data" / "sales_raw.csv"
     etl_sales(csv_path)

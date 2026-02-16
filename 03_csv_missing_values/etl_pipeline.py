@@ -66,5 +66,5 @@ def Load(df: pd.DataFrame) -> None:
 
 
 if __name__ == "__main__":
-    csv_path = Path(__file__).parent / "access_log.csv"
+    csv_path = Path(__file__).parent / "data" / "access_log.csv"
     etl_pipeline(csv_path)

@@ -164,7 +164,7 @@ def Verify():
 
 
 def main():
-    data = extract(BASE_PATH / "orders.json")
+    data = extract(BASE_PATH / "data" / "orders.json")
     customers, orders, order_items = transform(data)
     Load(customers, orders, order_items)
     Verify()

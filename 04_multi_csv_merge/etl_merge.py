@@ -2,6 +2,7 @@ import pandas as pd
 from pathlib import Path
 
 BASE_PATH = Path(__file__).parent
+DATA_PATH = BASE_PATH / "data"
 
 
 def extract(
@@ -102,9 +103,9 @@ def load(
 
 def main():
     dept_df, emp_df, att_df = extract(
-        BASE_PATH / "departments.csv",
-        BASE_PATH / "employees.csv",
-        BASE_PATH / "attendance.csv",
+        DATA_PATH / "departments.csv",
+        DATA_PATH / "employees.csv",
+        DATA_PATH / "attendance.csv",
     )
     issues, dept_summary, employee_work = transform(dept_df, emp_df, att_df)
     load(issues, dept_summary, employee_work)
