@@ -1,0 +1,20 @@
+2026-02-10 09:00:01 [INFO] server=web01 endpoint=/api/users method=GET status=200 response_time=50ms
+2026-02-10 09:00:05 [INFO] server=web02 endpoint=/api/products method=GET status=200 response_time=100ms
+2026-02-10 09:00:30 [WARN] server=web01 endpoint=/api/orders method=POST status=201 response_time=800ms
+2026-02-10 09:01:00 [INFO] server=web01 endpoint=/api/users method=GET status=200 response_time=40ms
+2026-02-10 09:01:10 [ERROR] server=web01 endpoint=/api/payment method=POST status=500 response_time=3000ms message="DB timeout"
+2026-02-10 09:01:20 [ERROR] server=web01 endpoint=/api/payment method=POST status=500 response_time=3500ms message="DB timeout"
+2026-02-10 09:01:30 [INFO] server=web02 endpoint=/api/products method=GET status=200 response_time=90ms
+This line is malformed and should be skipped
+2026-02-10 09:01:50 [ERROR] server=web01 endpoint=/api/orders method=POST status=503 response_time=5000ms message="Service unavailable"
+2026-02-10 09:02:00 [INFO] server=web02 endpoint=/api/users method=GET status=200 response_time=60ms
+2026-02-10 09:02:30 [INFO] server=web01 endpoint=/api/products method=GET status=200 response_time=150ms
+2026-02-10 09:03:00 [INFO] server=web02 endpoint=/api/orders method=GET status=200 response_time=70ms
+[INVALID] 2026-02-10 broken log entry
+2026-02-10 09:03:30 [ERROR] server=web02 endpoint=/api/payment method=POST status=500 response_time=4000ms message="Connection refused"
+2026-02-10 09:04:00 [INFO] server=web01 endpoint=/api/users method=GET status=200 response_time=50ms
+2026-02-10 09:04:30 [INFO] server=web02 endpoint=/api/products method=GET status=200 response_time=80ms
+2026-02-10 09:05:00 [ERROR] server=web01 endpoint=/api/payment method=POST status=500 response_time=3000ms message="DB timeout"
+2026-02-10 09:05:10 [ERROR] server=web01 endpoint=/api/payment method=POST status=502 response_time=6000ms message="Bad gateway"
+2026-02-10 09:05:20 [ERROR] server=web02 endpoint=/api/orders method=POST status=500 response_time=4500ms message="Internal error"
+2026-02-10 09:05:50 [INFO] server=web01 endpoint=/api/users method=GET status=200 response_time=50ms

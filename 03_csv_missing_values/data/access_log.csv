@@ -1,0 +1,16 @@
+user_id,timestamp,page,action,duration_sec,status_code
+U001,2026-02-04 09:15:23,/top,view,12,200
+U002,2026-02-04 09:16:01,/products/123,view,45,200
+U001,2026-02-04 09:17:50,/products/456,view,30,200
+U003,2026-02-04 09:18:10,/cart,add,5,200
+U002,2026-02-04 09:20:00,/checkout,purchase,120,200
+U001,2026-02-04 09:21:30,/top,view,-3,200
+U004,2026-02-04 09:22:00,/products/789,view,25,404
+U002,2026-02-04 09:25:00,/products/abc,view,,200
+U005,2026-02-04 09:30:00,/top,view,8,200
+U003,2026-02-04 09:31:00,/checkout,purchase,90,500
+U001,2026-02-04 10:00:00,/products/123,view,20,200
+U001,2026-02-04 10:05:00,/cart,add,3,200
+U002,2026-02-04 10:10:00,/top,view,15,200
+U006,,/products/999,view,10,200
+U003,2026-02-04 10:20:00,/checkout,purchase,60,200

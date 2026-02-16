@@ -1,0 +1,5 @@
+dept_id,dept_name,manager_id
+D001,営業部,E001
+D002,開発部,E004
+D003,人事部,E007
+D004,経理部,E010
