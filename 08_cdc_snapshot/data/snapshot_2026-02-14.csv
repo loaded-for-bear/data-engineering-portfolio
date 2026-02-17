@@ -1,0 +1,16 @@
+product_id,product_name,category,price,stock,status,updated_at
+P001,Wireless Mouse,Electronics,2980,150,active,2026-02-10
+P002,USB-C Cable,Electronics,890,500,active,2026-02-08
+P003,Desk Lamp,Furniture,4500,80,active,2026-02-12
+P004,Notebook A5,Stationery,320,1200,active,2026-02-05
+P005,Ergonomic Chair,Furniture,39800,25,active,2026-02-14
+P006,Mechanical Keyboard,Electronics,12800,60,active,2026-02-11
+P007,Monitor Stand,Furniture,5600,45,active,2026-02-09
+P008,Ballpoint Pen Set,Stationery,1500,300,active,2026-02-07
+P009,Webcam HD,Electronics,6980,90,active,2026-02-13
+P010,Standing Desk,Furniture,54800,15,active,2026-02-14
+P011,Sticky Notes Pack,Stationery,280,800,active,2026-02-06
+P012,USB Hub 7-Port,Electronics,3480,120,active,2026-02-10
+P013,Filing Cabinet,Furniture,18900,20,active,2026-02-08
+P014,Whiteboard Marker Set,Stationery,980,250,active,2026-02-11
+P015,Bluetooth Speaker,Electronics,7800,70,active,2026-02-13
