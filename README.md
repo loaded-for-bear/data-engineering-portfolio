@@ -6,7 +6,7 @@ CSV・JSON・ログ・API など多様なデータソースに対して、抽出
 ## 技術スタック
 
 - **言語**: Python 3.10
-- **主要ライブラリ**: pandas, requests, Flask（モックサーバー）
+- **主要ライブラリ**: pandas, requests, Flask（モックサーバー）, logging
 - **標準ライブラリ**: csv, json, sqlite3, re, logging, pathlib
 - **データストア**: CSV, SQLite
 
@@ -21,6 +21,7 @@ CSV・JSON・ログ・API など多様なデータソースに対して、抽出
 | 5 | JSON正規化 → SQLite | json, sqlite3, DB正規化, SQL集計 | `05_json_to_sqlite/` |
 | 6 | テキストログパース・異常検知 | re(正規表現), 時間帯集計, 異常検知 | `06_log_parsing/` |
 | 7 | API連携・Web取得 | requests, ページネーション, リトライ | `07_api_etl/` |
+| 8 | CDC（スナップショット差分検出） | pd.merge(outer), ベクトル演算, CDC設計 | `08_cdc_snapshot/` |
 
 ## セットアップ
 
@@ -74,8 +75,16 @@ data-engineering-portfolio/
 │   ├── README.md
 │   ├── parse_log.py
 │   └── data/
-└── 07_api_etl/
-    ├── README.md
-    ├── etl_api.py
-    └── mock_server.py
+├── 07_api_etl/
+│   ├── README.md
+│   ├── etl_api.py
+│   └── mock_server.py
+├── 08_cdc_snapshot/
+│   ├── README.md
+│   ├── cdc_snapshot.py
+│   └── data/
+└── tips/
+    ├── data_engineering/
+    ├── pandas/
+    └── python/
 ```
