@@ -2,7 +2,7 @@ import pandas as pd
 from pathlib import Path
 import time
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent
 
 
 def load_snapshot(prev_path: str, curr_path: str) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -102,7 +102,7 @@ def diff_detection(df_prev: pd.DataFrame, df_curr: pd.DataFrame) -> pd.DataFrame
 def load(df_result: pd.DataFrame) -> None:
     df_result[["product_id", "change_type", "changed_columns", "details"]].fillna(
         "-"
-    ).to_csv(BASE_DIR / "my_code" / "cdc_report.csv", index=False)
+    ).to_csv(BASE_DIR / "cdc_report.csv", index=False)
 
 
 def main():

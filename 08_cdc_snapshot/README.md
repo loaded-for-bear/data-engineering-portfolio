@@ -141,10 +141,10 @@
 ## 実行方法
 
 ```bash
-cd /workspace/03_trial/data_engineering_etl/2026-02-17
-python my_code/cdc_snapshot.py
+cd 08_cdc_snapshot
+python cdc_snapshot.py
 ```
 
 ### 出力ファイル
 
-- `my_code/cdc_report.csv` — 差分レポート（全17行: INSERT 2, DELETE 1, UPDATE 8, UNCHANGED 6）
+- `cdc_report.csv` — 差分レポート（全17行: INSERT 2, DELETE 1, UPDATE 8, UNCHANGED 6）
