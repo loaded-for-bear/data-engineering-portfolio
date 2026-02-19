@@ -44,6 +44,20 @@ timestamps = base_date + pd.to_timedelta(random_seconds, unit="s")
 df["order_date"] = timestamps.strftime("%Y-%m-%dT%H:%M:%S")
 ```
 
+#### 基準日を実行日にする
+
+```python
+base_date = pd.Timestamp("today").normalize()  # 今日の 00:00:00
+```
+
+`.normalize()` で時刻部分を `00:00:00` にリセットする。固定日付にしたい場合は文字列指定で十分。
+
+| 書き方 | 結果 |
+|--------|------|
+| `pd.Timestamp("2026-02-18")` | 固定日付の 00:00:00 |
+| `pd.Timestamp("today").normalize()` | 実行日の 00:00:00 |
+| `pd.Timestamp.now().normalize()` | 同上（別記法） |
+
 ### パターン付きIDの生成
 
 ```python
