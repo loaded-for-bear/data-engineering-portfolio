@@ -12,7 +12,7 @@ import uuid
 import numpy as np
 import pandas as pd
 
-n = 500_000
+n = 500000
 
 df = pd.DataFrame({
     "order_id": [str(uuid.uuid4()) for _ in range(n)],
