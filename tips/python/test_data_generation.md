@@ -102,11 +102,14 @@ f"{i:d}"    # → "42"      （埋めなし）
 n = 1000
 n_invalid = int(n * 0.15)  # 個別不正: 15%
 
-# 方法1: インデックス指定で上書き
+# 方法1: インデックス指定で上書き（比例分割）
+# NG: [:50], [50:100], [100:] のようなハードコードは n_invalid が変わると偏る
+# OK: n_invalid を不正種類数で割って均等に分配する
 invalid_idx = np.random.choice(n, size=n_invalid, replace=False)
-df.loc[invalid_idx[:50], "quantity"] = -1          # 負の値
-df.loc[invalid_idx[50:100], "unit_price"] = -99.9  # 負の値
-df.loc[invalid_idx[100:], "order_date"] = "INVALID" # パース不可
+n_each = n_invalid // 3  # 不正種類数（3種）で割る
+df.loc[invalid_idx[:n_each], "quantity"] = -1           # 負の値
+df.loc[invalid_idx[n_each:2*n_each], "unit_price"] = -99.9  # 負の値
+df.loc[invalid_idx[2*n_each:], "order_date"] = "INVALID"    # パース不可
 
 # 方法2: 重複行の追加（既存行をコピーして末尾に追加）
 n_dup = int(n * 0.10)  # 重複: 10%
