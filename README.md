@@ -5,7 +5,7 @@ CSV・JSON・ログ・API など多様なデータソースに対して、抽出
 
 ## 技術スタック
 
-- **言語**: Python 3.10
+- **言語**: Python 3.12
 - **主要ライブラリ**: pandas, requests, Flask（モックサーバー）, logging
 - **標準ライブラリ**: csv, json, sqlite3, re, logging, pathlib
 - **データストア**: CSV, SQLite
