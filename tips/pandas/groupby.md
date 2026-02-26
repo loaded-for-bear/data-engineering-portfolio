@@ -111,6 +111,64 @@ df.groupby("endpoint").agg(
 
 **注意**: `groupby().agg()` の結果はグループキーがインデックスになるため、`.reset_index()` してから `.sort_values()` するのが扱いやすい。
 
+### 8. 多軸クロス集計後に最大カテゴリを取得する
+
+2軸でグループ化した結果を「行 × 列」の表に変換し、各行の最大列名を取得するパターン。
+
+```python
+# region × category の売上表を作る
+cat_rev = df.groupby(["region", "category"])["revenue"].sum().unstack()
+#          Electronics  Fashion  Food
+# region
+# North         5000     3000    1200
+# South         2000     8000     900
+
+# 各 region で売上1位の category 名を取得
+top_category = cat_rev.idxmax(axis=1)
+# region
+# North    Electronics
+# South        Fashion
+```
+
+`idxmax(axis=1)` = 各行で最大値の **列名** を返す（`axis=0` は列ごとの最大行名）。
+
+## groupby().unstack() vs pivot_table() の使い分け
+
+どちらも「2軸クロス集計表」を作る。結果は同じ。
+
+```python
+# groupby().unstack()
+cat_rev = df.groupby(["region", "category"])["revenue"].sum().unstack()
+
+# pivot_table()（同じ結果）
+cat_rev = df.pivot_table(
+    values="revenue",
+    index="region",
+    columns="category",
+    aggfunc="sum"
+)
+```
+
+| | `groupby().unstack()` | `pivot_table()` |
+|---|---|---|
+| 向いている場面 | groupby の流れで書いている時 | 「クロス集計したい」と直感的に書く時 |
+| 欠損値の扱い | `NaN`（デフォルト） | `fill_value=0` で0埋めしやすい |
+| 複数集計関数 | 別途 `agg()` が必要 | `aggfunc=["sum", "count"]` で一括可能 |
+| 可読性 | groupby の続きとして読める | 引数が明示的で意図が伝わりやすい |
+
+```python
+# pivot_table の fill_value と複数 aggfunc の例
+df.pivot_table(
+    values="revenue",
+    index="region",
+    columns="category",
+    aggfunc=["sum", "count"],
+    fill_value=0          # NaN を 0 に置換
+)
+```
+
+**ETL での典型パターン**: groupby で集計 → `unstack()` で表に変換 → `idxmax(axis=1)` で最大カテゴリ取得。
+
 ## groupby vs transform の違い
 
 | | `groupby().mean()` | `groupby().transform("mean")` |
