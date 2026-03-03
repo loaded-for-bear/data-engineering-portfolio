@@ -22,3 +22,9 @@ venv/
 # OS
 .DS_Store
 Thumbs.db
+summary_by_category.csv
+summary_by_region.csv
+summary_hourly.csv
+
+# Large generated test data (510,000 rows)
+orders_large.csv
