@@ -84,6 +84,14 @@ data-engineering-portfolio/
 │   ├── README.md
 │   ├── cdc_snapshot.py
 │   └── data/
+├── 09_large_data_processing/
+│   ├── README.md
+│   ├── etl_a.py
+│   ├── etl_b.py
+│   ├── generate_test_data.py
+│   ├── test_etl_b.py
+│   ├── requirements.txt
+│   └── data/
 └── tips/
     ├── data_engineering/
     ├── pandas/
