@@ -87,14 +87,69 @@ def test_output_file():
     assert list(df.columns) == ["category", "total_orders", "total_revenue"]
 ```
 
-### 2. 数値の近似比較（浮動小数点）
+### 2. 数値の近似比較（浮動小数点）— `pytest.approx`
+
+#### なぜ必要か
+
+コンピュータの浮動小数点演算は厳密に一致しないことがある:
 
 ```python
-# float は == で比較すると誤差で失敗する場合がある
-assert result == pytest.approx(3.14, abs=0.01)
+>>> 0.1 + 0.2
+0.30000000000000004   # 0.3 ではない
 
-# pandas DataFrame の比較
+>>> 0.1 + 0.2 == 0.3
+False
+```
+
+`quantity × unit_price` の合計など、float が絡む計算では `==` が失敗する可能性がある。
+
+#### 基本構文
+
+```python
+import pytest
+
+# NG: 厳密比較（誤差で失敗することがある）
+assert result == 59600.0
+
+# OK: 誤差を許容した比較
+assert result == pytest.approx(59600.0)
+```
+
+デフォルトの許容誤差は **相対誤差 1e-6（0.0001%）**。
+
+```python
+assert 59600.0000001 == pytest.approx(59600.0)  # PASS（誤差 0.000000002%）
+assert 59601.0       == pytest.approx(59600.0)  # FAIL（誤差 0.0017% > 1e-6）
+```
+
+#### 許容誤差を自分で指定する
+
+```python
+# 相対誤差 1% まで許容
+assert value == pytest.approx(59600.0, rel=1e-2)
+
+# 絶対誤差 0.5 まで許容（小数点以下を気にしない場合）
+assert value == pytest.approx(59600.0, abs=0.5)
+```
+
+#### int には不要
+
+```python
+# int 同士なら == で問題なし（誤差が生じない）
+assert len(result) == 5
+assert result["count"].sum() == 17
+```
+
+`float` が絡む計算（掛け算・割り算・sum）では `pytest.approx` を使う習慣にすると安全。
+
+#### pandas DataFrame の比較
+
+```python
+# DataFrame 全体を比較する場合は pd.testing を使う
 pd.testing.assert_frame_equal(df1, df2)
+
+# check_exact=False で float 列の誤差を許容
+pd.testing.assert_frame_equal(df1, df2, check_exact=False)
 ```
 
 ### 3. 例外が発生することのテスト
