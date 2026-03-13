@@ -6,7 +6,8 @@ CSV・JSON・ログ・API など多様なデータソースに対して、抽出
 ## 技術スタック
 
 - **言語**: Python 3.12
-- **主要ライブラリ**: pandas, requests, Flask（モックサーバー）, logging, pytest
+- **主要ライブラリ**: pandas, requests, Flask（モックサーバー）, logging, pytest, pytest-cov
+- **CI/CD**: GitHub Actions（ruff lint + pytest + coverage）
 - **標準ライブラリ**: csv, json, sqlite3, re, logging, pathlib, collections, tracemalloc
 - **データストア**: CSV, SQLite
 
@@ -23,6 +24,7 @@ CSV・JSON・ログ・API など多様なデータソースに対して、抽出
 | 7 | API連携・Web取得 | requests, ページネーション, リトライ | `07_api_etl/` |
 | 8 | CDC（スナップショット差分検出） | pd.merge(outer), ベクトル演算, CDC設計 | `08_cdc_snapshot/` |
 | 9 | 大容量データ処理 | chunksize, defaultdict累積, メモリ計測, pytest | `09_large_data_processing/` |
+| 16 | テスト・品質保証 | pytest, フィクスチャ, parametrize, モック, CI（GitHub Actions）, カバレッジ96% | `16_testing_quality_assurance/` |
 
 ## セットアップ
 
@@ -91,6 +93,14 @@ data-engineering-portfolio/
 │   ├── generate_test_data.py
 │   ├── test_etl_b.py
 │   ├── requirements.txt
+│   └── data/
+├── 16_testing_quality_assurance/
+│   ├── README.md
+│   ├── pipeline.py
+│   ├── conftest.py
+│   ├── test_pipeline.py
+│   ├── requirements.txt
+│   ├── .github/workflows/ci.yml
 │   └── data/
 └── tips/
     ├── data_engineering/
