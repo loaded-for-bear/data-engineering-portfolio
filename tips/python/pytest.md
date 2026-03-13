@@ -139,6 +139,87 @@ def test_with_temp_dir(tmp_path):
     assert len(result) > 0
 ```
 
+## フィクスチャ（fixture）— テストデータ・前処理の共通化
+
+### 基本構文
+
+```python
+# conftest.py
+import pytest
+import pandas as pd
+
+@pytest.fixture
+def sample_df():
+    return pd.DataFrame({
+        "order_id": ["ORD-00000001"],
+        "quantity": [2],
+        "unit_price": [29800.0],
+    })
+```
+
+```python
+# test_pipeline.py（import 不要）
+def test_validate_normal(sample_df):   # 引数名 = フィクスチャ名
+    result = validate(sample_df)
+    assert len(result) == 1
+```
+
+### 自動注入の仕組み
+
+pytest はテスト関数の**引数名**を見て、`conftest.py` に定義された同名フィクスチャを自動で探し、値を渡す（= 依存性注入）。**`import` は不要**。
+
+```
+conftest.py               test_pipeline.py
+────────────────────      ──────────────────────────────────
+@pytest.fixture           def test_validate_normal(sample_df):
+def sample_df():      →       ↑ 引数名を見て自動注入
+    return pd.DataFrame(...)
+```
+
+### 探索順序
+
+pytest は以下の順で `conftest.py` を探す（見つかった時点で使用）:
+
+```
+my_code/
+├── conftest.py       ← ① 同ディレクトリを最初に探す
+├── test_pipeline.py
+└── ...
+(親ディレクトリ → さらに上、と階層を上って探す)
+```
+
+### フィクスチャがフィクスチャを使う
+
+フィクスチャ同士を組み合わせることもできる。`tmp_path` は pytest 組み込みのフィクスチャで、テスト用の一時ディレクトリを自動生成・自動削除する:
+
+```python
+@pytest.fixture
+def tmp_output_dir(tmp_path):   # tmp_path は pytest 組み込み
+    return tmp_path
+```
+
+```python
+def test_idempotency(tmp_output_dir):   # conftest 経由で tmp_path を受け取る
+    output_path = tmp_output_dir / "result.csv"
+    ...
+```
+
+### 通常の Python との比較
+
+| | 通常の Python | pytest フィクスチャ |
+|--|---|---|
+| 使い方 | `import` が必要 | `import` 不要（conftest.py を自動読み込み）|
+| インスタンス化 | 呼び出し側が行う | pytest が自動で渡す |
+| 引数の意味 | 任意 | 引数名 = フィクスチャ名（命名が重要）|
+
+### conftest.py の配置ルール
+
+- **同ディレクトリの `conftest.py`** にテスト共通のフィクスチャを定義する（`import` 不要）
+- 複数テストファイルで共有するフィクスチャは必ず `conftest.py` に置く
+- テストファイル固有のフィクスチャは `test_*.py` 内に直接書いてもよい
+
+---
+
 ## テストの実行方法
 
 ```bash
