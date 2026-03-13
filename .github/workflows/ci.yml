@@ -28,12 +28,14 @@ jobs:
           ruff check 16_testing_quality_assurance/pipeline.py
 
       - name: Run tests
+        working-directory: 16_testing_quality_assurance
         run: |
-          pytest 16_testing_quality_assurance/test_pipeline.py --tb=short -v
+          pytest test_pipeline.py --tb=short -v
 
       - name: Coverage report
+        working-directory: 16_testing_quality_assurance
         run: |
-          pytest 16_testing_quality_assurance/test_pipeline.py \
-            --cov=16_testing_quality_assurance/pipeline \
+          pytest test_pipeline.py \
+            --cov=pipeline \
             --cov-report=term-missing \
             --cov-fail-under=80
