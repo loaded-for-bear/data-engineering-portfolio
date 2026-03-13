@@ -112,6 +112,33 @@ def test_missing_column():
         process("missing_column.csv")
 ```
 
+#### `match` パラメータ — エラーメッセージの内容を検証する
+
+`match` を指定すると、例外の種類に加えてメッセージの内容も検証できる。
+
+```python
+# match なし → ValueError が出れば何でも PASS
+with pytest.raises(ValueError):
+    validate(df)
+
+# match あり → ValueError かつメッセージに "必須カラムが不足" が含まれないと FAIL
+with pytest.raises(ValueError, match="必須カラムが不足"):
+    validate(df)
+```
+
+**対応する raise 側のコード例:**
+
+```python
+# pipeline.py
+raise ValueError(f"必須カラムが不足しています：{missing}")
+#                    ↑ "必須カラムが不足" が含まれる → match に一致 → PASS
+```
+
+**ポイント:**
+- `match` は**正規表現**として扱われる（部分一致でOK）
+- `"必須カラムが不足"` と書けば `"必須カラムが不足しています：{'order_id'}"` にも一致する
+- `match` を使うと「正しい理由でエラーが出ているか」まで検証できる（より厳密なテスト）
+
 ### 4. 冪等性テスト
 
 ```python
