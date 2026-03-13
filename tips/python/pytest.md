@@ -139,7 +139,95 @@ raise ValueError(f"必須カラムが不足しています：{missing}")
 - `"必須カラムが不足"` と書けば `"必須カラムが不足しています：{'order_id'}"` にも一致する
 - `match` を使うと「正しい理由でエラーが出ているか」まで検証できる（より厳密なテスト）
 
-### 4. 冪等性テスト
+### 4. パラメータ化テスト（parametrize）— 同じロジック・違う値を一括テスト
+
+`@pytest.mark.parametrize` を使うと、1つのテスト関数を複数の値パターンで実行できる。
+
+#### 基本構文
+
+```python
+@pytest.mark.parametrize("引数名1,引数名2", [
+    (値1a, 値2a),   # パターン1
+    (値1b, 値2b),   # パターン2
+])
+def test_something(引数名1, 引数名2):
+    ...
+```
+
+- 第1引数（文字列）: テスト関数に渡す**引数名**をカンマ区切りで指定
+- 第2引数（リスト）: 各テストケースの**値の組み合わせ**をタプルで列挙
+
+#### 使用例（境界値テスト）
+
+```python
+@pytest.mark.parametrize("qty,expected_len", [
+    (1,    1),   # 最小値 → 通過
+    (9999, 1),   # 最大値 → 通過
+    (0,    0),   # 下限外 → 除去
+])
+def test_clean_quantity_boundary(sample_df, qty, expected_len):
+    df = sample_df.copy()
+    df["quantity"] = qty
+    result = clean(df)
+    assert len(result) == expected_len
+```
+
+これは以下の3テストとして実行される:
+
+```
+test_clean_quantity_boundary[1-1]     ← qty=1,    expected_len=1
+test_clean_quantity_boundary[9999-1]  ← qty=9999, expected_len=1
+test_clean_quantity_boundary[0-0]     ← qty=0,    expected_len=0
+```
+
+#### parametrize なしとの比較
+
+```python
+# parametrize なし（冗長・DRY違反）
+def test_qty_min(sample_df):
+    df = sample_df.copy()
+    df["quantity"] = 1
+    assert len(clean(df)) == 1
+
+def test_qty_max(sample_df):
+    df = sample_df.copy()
+    df["quantity"] = 9999
+    assert len(clean(df)) == 1
+
+def test_qty_zero(sample_df):
+    df = sample_df.copy()
+    df["quantity"] = 0
+    assert len(clean(df)) == 0
+```
+
+```python
+# parametrize あり（DRY・読みやすい）
+@pytest.mark.parametrize("qty,expected_len", [(1,1),(9999,1),(0,0)])
+def test_clean_quantity_boundary(sample_df, qty, expected_len):
+    df = sample_df.copy()
+    df["quantity"] = qty
+    assert len(clean(df)) == expected_len
+```
+
+#### フィクスチャとの併用
+
+`sample_df` のようなフィクスチャと parametrize は併用できる（引数に両方書くだけ）:
+
+```python
+@pytest.mark.parametrize("price,expected_len", [
+    (0.01,     1),   # 最小値
+    (99999.99, 1),   # 最大値
+    (0,        0),   # 下限外（0より大きい制約）
+])
+def test_clean_price_boundary(sample_df, price, expected_len):
+    df = sample_df.copy()
+    df["unit_price"] = price
+    assert len(clean(df)) == expected_len
+```
+
+---
+
+### 5. 冪等性テスト
 
 ```python
 def test_idempotency():
